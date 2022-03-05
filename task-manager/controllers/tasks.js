@@ -1,8 +1,10 @@
 const tasks = require("../models/tasks");
+
 const getAllTasks = async (req, res) => {
   try {
     const task = await tasks.find({});
     res.status(200).json({ task });
+    //here you can pass anything ! yuo dont have to necesserly send tasks
   } catch (error) {
     res.status(500).json({ msg: error });
   }

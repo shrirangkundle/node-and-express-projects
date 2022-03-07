@@ -18,23 +18,13 @@ const login = async (req, res) => {
 };
 
 const dashboard = async (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    throw new CustomAPIError("invalid token", 401);
-  }
+  console.log(req.user);
 
-  const token = authHeader.split(" ")[1];
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const luckyNumber = Math.floor(Math.random() * 100);
-    res.status(200).json({
-      msg: `Hey ${decoded.username}`,
-      secret: `Here is your lucky Number ${luckyNumber}`,
-    });
-  } catch (error) {
-    throw new CustomAPIError("token expired", 401);
-  }
+  const luckyNumber = Math.floor(Math.random() * 100);
+  res.status(200).json({
+    msg: `Hey ${req.user.username}`,
+    secret: `Here is your lucky Number ${luckyNumber}`,
+  });
 };
 
 module.exports = { login, dashboard };
